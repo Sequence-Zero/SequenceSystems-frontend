@@ -182,14 +182,14 @@ export default function Home() {
                     variant="outline"
                     className="px-3.5 py-2 text-xs"
                   >
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                    <a
+                      href="https://github.com/Sequence-Zero/LocomotionRobot"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       Repo
                     </a>
                   </Button>
-                  {/* TODO: add locomotion repo link */}
-                  <span className="flex items-center text-[11px] text-zinc-400">
-                    TODO: add locomotion repo link
-                  </span>
                 </div>
               </CardContent>
             </Card>
