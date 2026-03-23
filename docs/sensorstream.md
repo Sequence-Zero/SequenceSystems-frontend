@@ -86,9 +86,3 @@ Query parameters:
 - Expanded backend test coverage (auth, edge cases)
 - Frontend component and state tests
 - Automated API contract tests
-
-## Roadmap
-- [Placeholder] Add pagination and cursor-based reads.
-- [Placeholder] Add richer sensor metadata and units.
-- [Placeholder] Improve visualization options (multi-sensor overlays).
-- [Placeholder] Expand automated test coverage.

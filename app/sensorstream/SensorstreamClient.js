@@ -41,9 +41,9 @@ export default function SensorstreamClient() {
       : "bg-blue-600";
 
   const formatTimestamp = (date) => {
-    if (!date) return "ï¿½";
+    if (!date) return "N/A";
     const parsed = new Date(date);
-    if (Number.isNaN(parsed.getTime())) return "ï¿½";
+    if (Number.isNaN(parsed.getTime())) return "N/A";
     return parsed.toLocaleTimeString(undefined, {
       hour: "2-digit",
       minute: "2-digit",
@@ -52,7 +52,7 @@ export default function SensorstreamClient() {
   };
 
   const formatValue = (value) => {
-    if (value === null || value === undefined) return "ï¿½";
+    if (value === null || value === undefined) return "N/A";
     if (typeof value === "number") {
       if (Number.isInteger(value)) return String(value);
       return value.toFixed(3);
@@ -83,7 +83,7 @@ export default function SensorstreamClient() {
 
   const buildLatestBySensor = (readings) => {
     return readings.reduce((acc, reading) => {
-      const sensor = reading?.sensor || reading?.sensor_id || "ï¿½";
+      const sensor = reading?.sensor || reading?.sensor_id || "N/A";
       const current = acc[sensor];
       if (!current) {
         acc[sensor] = reading;
@@ -427,7 +427,7 @@ export default function SensorstreamClient() {
     if (series.length < 2) {
       ctx.fillStyle = "#777";
       ctx.font = "12px monospace";
-      ctx.fillText("Waiting for dataï¿½", 8, 18);
+      ctx.fillText("Waiting for data...", 8, 18);
       return;
     }
 
@@ -553,7 +553,7 @@ export default function SensorstreamClient() {
               Showing: {readingsLimit}
             </span>
             <span className="rounded-full border border-zinc-200 bg-white px-2.5 py-1">
-              Sensor: {selectedSensor || "ï¿½"}
+              Sensor: {selectedSensor || "N/A"}
             </span>
             <span className="rounded-full border border-zinc-200 bg-white px-2.5 py-1">
               Points: {series.length}
@@ -751,7 +751,7 @@ export default function SensorstreamClient() {
                         className="border-b border-zinc-100 px-2 py-2 text-sm text-zinc-500"
                         colSpan={3}
                       >
-                        Waiting for dataï¿½
+                        Waiting for data...
                       </td>
                     </tr>
                   ) : (
@@ -766,7 +766,7 @@ export default function SensorstreamClient() {
                           {formatTimestamp(point.t)}
                         </td>
                         <td className="border-b border-zinc-100 px-2 py-2 font-mono text-xs">
-                          {selectedSensor || "ï¿½"}
+                          {selectedSensor || "N/A"}
                         </td>
                         <td className="border-b border-zinc-100 px-2 py-2">
                           {formatValue(point.v)}

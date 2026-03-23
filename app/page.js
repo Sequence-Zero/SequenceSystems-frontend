@@ -3,6 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Chris Keenan",
+};
+
 export default function Home() {
   return (
     <main className="min-h-screen">
@@ -25,14 +29,15 @@ export default function Home() {
                   Chris Keenan
                 </h1>
                 <p className="text-lg font-medium text-zinc-700">
-                  Full-Stack Developer (Seeking Internships)
+                  Full-Stack Developer 
                 </p>
               </div>
             </div>
             <p className="max-w-2xl text-lg leading-relaxed text-zinc-700">
-              I build end-to-end systems that connect APIs, data pipelines, and
-              real-time dashboards. I enjoy shipping practical tools that turn
-              raw telemetry into clean, decision-ready interfaces.
+              I build end to end systems that connect APIs, data pipelines, and real-time 
+              dashboards, with a growing focus on robotics and embedded systems. I enjoy bridging
+              hardware and software, turning raw telemetry and sensor data into clean, decision 
+              ready interfaces.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild className="shadow-sm focus-visible:ring-2 focus-visible:ring-zinc-400">
@@ -198,21 +203,23 @@ export default function Home() {
               <h2 className="text-xl font-semibold text-zinc-900">About</h2>
               <div className="space-y-3 text-sm text-zinc-600">
                 <div className="inline-flex items-center rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-xs font-medium text-zinc-600">
-                  Currently: Seeking Software Engineering Internships (Spring/Summer 2026)
+                  Currently: Seeking Software Engineering Roles (Open to internships)
                 </div>
                 <p>
-                  I am a CS student building end-to-end systems that pair Flask
+                  I am a CS student building end to end systems that pair Flask
                   APIs, durable persistence layers, and production-ready
-                  dashboards. I enjoy translating messy telemetry into
+                  dashboards. Im particularly interested in bridging software with the physical world through 
+                  robotics and embedded systems, and exploring how AI can integrate with real-world systems.
+                  I enjoy translating messy telemetry into
                   interfaces that make status, anomalies, and trends obvious,
                   then hardening the pipeline so data stays accurate and
                   consistent as the system scales.
                 </p>
                 <p>
-                  Over the next four months, my priority is landing a software
-                  engineering internship where I can contribute immediately.
+                  Over the next three months, my priority is landing a software
+                  engineering internship or junior role where I can contribute immediately.
                   After graduation, I plan to transition into a full-time new
-                  grad role focused on reliable, data-intensive products.
+                  grad role focused on reliable, data intensive products.
                 </p>
                 <ul className="list-disc space-y-1 pl-5">
                   <li>
@@ -228,7 +235,7 @@ export default function Home() {
                     workflows
                   </li>
                   <li>
-                    Debugging-first mindset with tests that prove edge-case
+                    Debugging first mindset with tests that prove edge-case
                     behavior
                   </li>
                 </ul>

@@ -3,6 +3,10 @@ import remarkGfm from "remark-gfm";
 import { loadMarkdown } from "@/lib/loadMarkdown";
 import SensorstreamClient from "./SensorstreamClient";
 
+export const metadata = {
+  title: "SensorStreamAPI",
+};
+
 export default async function SensorstreamPage() {
   const docsContent = await loadMarkdown("docs/sensorstream.md");
 

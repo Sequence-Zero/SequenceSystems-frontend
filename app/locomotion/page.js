@@ -2,6 +2,10 @@
 import remarkGfm from "remark-gfm";
 import { loadMarkdown } from "@/lib/loadMarkdown";
 
+export const metadata = {
+  title: "Locomotion Robot",
+};
+
 export default async function LocomotionPage() {
   const docsContent = await loadMarkdown("docs/locomotion.md");
 
@@ -171,7 +175,61 @@ export default async function LocomotionPage() {
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
-                code: ({ inline, className, children, ...props }) =>
+                h1: ({ children, ...props }) => (
+                  <h1
+                    className="mb-4 font-mono text-2xl font-bold text-zinc-900"
+                    {...props}
+                  >
+                    {children}
+                  </h1>
+                ),
+                h2: ({ children, ...props }) => (
+                  <h2
+                    className="mb-3 mt-6 font-mono text-base font-bold text-zinc-900"
+                    {...props}
+                  >
+                    {children}
+                  </h2>
+                ),
+                h3: ({ children, ...props }) => (
+                  <h3
+                    className="mb-2 mt-5 font-mono text-sm font-bold text-zinc-900"
+                    {...props}
+                  >
+                    {children}
+                  </h3>
+                ),
+                p: ({ children, ...props }) => (
+                  <p className="leading-relaxed text-zinc-700" {...props}>
+                    {children}
+                  </p>
+                ),
+                ul: ({ children, ...props }) => (
+                  <ul
+                    className="mb-4 list-disc space-y-2 pl-5 text-zinc-700"
+                    {...props}
+                  >
+                    {children}
+                  </ul>
+                ),
+                ol: ({ children, ...props }) => (
+                  <ol
+                    className="mb-4 list-decimal space-y-2 pl-5 text-zinc-700"
+                    {...props}
+                  >
+                    {children}
+                  </ol>
+                ),
+                li: ({ children, ...props }) => <li {...props}>{children}</li>,
+                blockquote: ({ children, ...props }) => (
+                  <div
+                    className="my-4 rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-700"
+                    {...props}
+                  >
+                    {children}
+                  </div>
+                ),
+                code: ({ inline, children, ...props }) =>
                   inline ? (
                     <code
                       className="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs text-zinc-800"
@@ -186,14 +244,14 @@ export default async function LocomotionPage() {
                   ),
                 pre: ({ children, ...props }) => (
                   <pre
-                    className="mb-4 overflow-auto rounded-lg bg-zinc-900 p-4 text-xs text-zinc-100"
+                    className="my-3 overflow-x-auto rounded-lg border border-zinc-200 bg-zinc-100 p-3"
                     {...props}
                   >
                     {children}
                   </pre>
                 ),
               }}
-              className="prose prose-zinc max-w-none prose-pre:bg-zinc-900 prose-pre:text-zinc-100"
+              className="prose prose-zinc max-w-none space-y-4"
             >
               {docsContent}
             </ReactMarkdown>
