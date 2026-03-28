@@ -118,7 +118,6 @@ export default function Home() {
               </h2>
               <p className="text-sm text-zinc-500">Selected demos and case studies.</p>
             </div>
-            <span className="text-sm text-zinc-500">Built to show systems thinking in production.</span>
           </div>
 
           <div className="mt-6 grid gap-6 lg:grid-cols-2">
