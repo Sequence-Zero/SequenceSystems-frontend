@@ -1,4 +1,4 @@
-﻿import ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { loadMarkdown } from "@/lib/loadMarkdown";
 import SensorstreamClient from "./SensorstreamClient";
@@ -14,12 +14,12 @@ export default async function SensorstreamPage() {
     <main className="min-h-screen">
       <SensorstreamClient />
 
-      <div className="mx-auto mt-10 max-w-6xl px-4 pb-12">
+      <div className="page-shell mt-10 pb-12">
         <section className="surface">
-          <div className="border-b border-zinc-100 px-4 py-3">
+          <div className="panel-header">
             <h2 className="text-sm font-semibold text-zinc-900">Repository</h2>
           </div>
-          <div className="flex flex-col gap-3 p-4 text-sm text-zinc-600 sm:flex-row sm:items-center sm:justify-between">
+          <div className="panel-body flex flex-col gap-3 text-sm text-zinc-600 sm:flex-row sm:items-center sm:justify-between">
             <p>
               Source code for the SensorStream demo UI and supporting
               documentation.
@@ -36,10 +36,10 @@ export default async function SensorstreamPage() {
         </section>
 
         <section className="mt-6 surface">
-          <div className="border-b border-zinc-100 px-4 py-3">
+          <div className="panel-header">
             <h2 className="text-sm font-semibold text-zinc-900">Documentation</h2>
           </div>
-          <div className="p-4 text-sm text-zinc-700">
+          <div className="panel-body text-sm text-zinc-700">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
@@ -68,10 +68,7 @@ export default async function SensorstreamPage() {
                   </h3>
                 ),
                 p: ({ children, ...props }) => (
-                  <p
-                    className="leading-relaxed text-zinc-700"
-                    {...props}
-                  >
+                  <p className="leading-relaxed text-zinc-700" {...props}>
                     {children}
                   </p>
                 ),
@@ -127,7 +124,7 @@ export default async function SensorstreamPage() {
                   </pre>
                 ),
               }}
-              className="prose prose-zinc max-w-none space-y-4"
+              className="prose prose-zinc max-w-none space-y-4 prose-headings:tracking-tight"
             >
               {docsContent}
             </ReactMarkdown>

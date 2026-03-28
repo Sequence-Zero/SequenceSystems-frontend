@@ -1,5 +1,7 @@
 ﻿"use client";
 
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function SensorstreamClient() {
@@ -32,6 +34,18 @@ export default function SensorstreamClient() {
   const healthRetryMax = 25;
   const chartRef = useRef(null);
   const isMountedRef = useRef(false);
+  const basePillClassName =
+    "inline-flex min-h-9 items-center rounded-full border px-3 py-1.5 text-xs font-medium leading-none shadow-sm";
+  const neutralPillClassName =
+    `${basePillClassName} border-zinc-200 bg-white text-zinc-700`;
+  const statusPillClassName =
+    apiStatus === "ready"
+      ? `${basePillClassName} border-emerald-200 bg-emerald-50 text-emerald-700`
+      : `${basePillClassName} border-red-200 bg-red-50 text-red-700`;
+  const streamingPillClassName =
+    isStreaming
+      ? `${basePillClassName} border-emerald-200 bg-emerald-50 text-emerald-700`
+      : `${basePillClassName} border-red-200 bg-red-50 text-red-700`;
   const buttonClassName = isStreaming
     ? isButtonHovered
       ? "bg-red-700"
@@ -505,84 +519,88 @@ export default function SensorstreamClient() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:py-12">
-      <header className="flex flex-col gap-6 border-b border-zinc-200 pb-8 lg:flex-row lg:items-center lg:justify-between">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            SensorStream Live Demo
-          </h1>
-          <p className="text-sm text-zinc-500">
-            Real-time device telemetry viewer
-          </p>
-          <div className="text-xs font-medium text-zinc-500">
-            API: {statusLabel}
-          </div>
-          {isInitializingSession && (
-            <div className="text-xs text-zinc-500">
-              Initializing demo session...
+      <header className="border-b border-zinc-200 pb-8">
+        <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+          <div className="max-w-2xl space-y-3">
+            <div className="pb-2">
+              <Button
+                asChild
+                variant="ghost"
+                className="h-auto rounded-full border border-zinc-200/80 bg-white/70 px-3.5 py-2 text-sm font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-white"
+              >
+                <Link href="/">&larr; Back to Portfolio</Link>
+              </Button>
             </div>
-          )}
-          {sessionError && (
-            <div className="text-xs text-red-600">{sessionError}</div>
-          )}
-          {pumpWarning && (
-            <div className="text-xs text-amber-700">{pumpWarning}</div>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
-          <div className="flex flex-wrap gap-2 text-[11px] text-zinc-600">
-            <span
-              className={`rounded-full border px-2.5 py-1 font-semibold uppercase tracking-wide ${
-                apiStatus === "ready"
-                  ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                  : "border-red-200 bg-red-50 text-red-700"
-              }`}
-            >
-              API {statusLabel}
-            </span>
-            <span className="rounded-full border border-zinc-200 bg-white px-2.5 py-1 font-mono">
-              Device: {uiDeviceId ? `${uiDeviceId.slice(0, 8)}...` : "(demo)"}
-            </span>
-            <span className="rounded-full border border-zinc-200 bg-white px-2.5 py-1 font-mono">
-              Session: {uiSessionId ? `${uiSessionId.slice(0, 8)}...` : "(none)"}
-            </span>
-            <span className="rounded-full border border-zinc-200 bg-white px-2.5 py-1">
-              Poll: {pollIntervalMs / 1000}s
-            </span>
-            <span className="rounded-full border border-zinc-200 bg-white px-2.5 py-1">
-              Showing: {readingsLimit}
-            </span>
-            <span className="rounded-full border border-zinc-200 bg-white px-2.5 py-1">
-              Sensor: {selectedSensor || "N/A"}
-            </span>
-            <span className="rounded-full border border-zinc-200 bg-white px-2.5 py-1">
-              Points: {series.length}
-            </span>
-            <span
-              className={`rounded-full border px-2.5 py-1 font-semibold uppercase tracking-wide ${
-                isStreaming
-                  ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                  : "border-red-200 bg-red-50 text-red-700"
-              }`}
-            >
-              Streaming: {isStreaming ? "on" : "off"}
-            </span>
+            <div className="space-y-1.5">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                Live Demo
+              </p>
+              <h1 className="text-3xl font-semibold tracking-tight text-zinc-950 sm:text-[2rem]">
+                SensorStream Live Demo
+              </h1>
+            </div>
+            <p className="max-w-xl text-sm leading-6 text-zinc-600 sm:text-[0.95rem]">
+              Real-time device telemetry viewer with live session status, sensor selection, and
+              streaming chart updates.
+            </p>
+            <div className="space-y-1.5">
+              {isInitializingSession && (
+                <div className="text-sm text-zinc-500">
+                  Initializing demo session...
+                </div>
+              )}
+              {sessionError && (
+                <div className="text-sm text-red-600">{sessionError}</div>
+              )}
+              {pumpWarning && (
+                <div className="text-sm text-amber-700">{pumpWarning}</div>
+              )}
+              {!isInitializingSession && !sessionError && !pumpWarning && (
+                <div className="text-sm text-zinc-500">API status: {statusLabel}</div>
+              )}
+            </div>
           </div>
-          <div className="lg:ml-auto">
-            <button
-              type="button"
-              onClick={handleStartStop}
-              onMouseEnter={() => setIsButtonHovered(true)}
-              onMouseLeave={() => setIsButtonHovered(false)}
-              disabled={!canStart}
-              className={`rounded-lg border border-transparent px-5 py-2 text-sm font-semibold text-white shadow-sm transition ${
-                canStart
-                  ? buttonClassName
-                  : "cursor-not-allowed bg-zinc-300 text-zinc-500 shadow-none"
-              }`}
-            >
-              {startButtonLabel}
-            </button>
+
+          <div className="flex w-full max-w-3xl flex-col gap-4 xl:items-end">
+            <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-3 shadow-sm sm:p-4">
+              <div className="flex flex-wrap gap-2.5 text-zinc-700">
+                <span className={`${statusPillClassName} font-semibold uppercase tracking-[0.14em]`}>
+                  API {statusLabel}
+                </span>
+                <span className={`${neutralPillClassName} font-mono`}>
+                  Device: {uiDeviceId ? `${uiDeviceId.slice(0, 8)}...` : "(demo)"}
+                </span>
+                <span className={`${neutralPillClassName} font-mono`}>
+                  Session: {uiSessionId ? `${uiSessionId.slice(0, 8)}...` : "(none)"}
+                </span>
+                <span className={neutralPillClassName}>Poll Interval: {pollIntervalMs / 1000}s</span>
+                <span className={neutralPillClassName}>Showing Count: {readingsLimit}</span>
+                <span className={neutralPillClassName}>Sensor: {selectedSensor || "N/A"}</span>
+                <span className={neutralPillClassName}>Points: {series.length}</span>
+                <span className={`${streamingPillClassName} font-semibold uppercase tracking-[0.14em]`}>
+                  Streaming {isStreaming ? "on" : "off"}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex sm:justify-end">
+              <div className="rounded-2xl border border-zinc-200/80 bg-white/80 p-2 shadow-sm">
+                <button
+                  type="button"
+                  onClick={handleStartStop}
+                  onMouseEnter={() => setIsButtonHovered(true)}
+                  onMouseLeave={() => setIsButtonHovered(false)}
+                  disabled={!canStart}
+                  className={`rounded-xl border border-transparent px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition ${
+                    canStart
+                      ? buttonClassName
+                      : "cursor-not-allowed bg-zinc-300 text-zinc-500 shadow-none"
+                  }`}
+                >
+                  {startButtonLabel}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -677,16 +695,26 @@ export default function SensorstreamClient() {
       )}
 
       <div className="mt-8 grid gap-6 lg:grid-cols-12">
-        <div className="flex flex-col space-y-6 lg:col-span-5">
-          <section className="rounded-xl border border-zinc-200 bg-white shadow-sm">
-            <div className="border-b border-zinc-100 px-4 py-3">
-              <h2 className="text-sm font-semibold text-zinc-900">
-                Latest values
-              </h2>
+        <div className="flex flex-col gap-6 lg:col-span-5">
+          <section className="rounded-2xl border border-zinc-200 bg-white shadow-sm">
+            <div className="flex items-center justify-between gap-3 border-b border-zinc-100 px-5 py-4">
+              <div className="space-y-1">
+                <h2 className="text-sm font-semibold text-zinc-900">
+                  Latest values
+                </h2>
+                <p className="text-xs text-zinc-500">
+                  Most recent reading for each active sensor.
+                </p>
+              </div>
             </div>
-            <div className="p-4">
+            <div className="p-5">
               {Object.keys(latestBySensor).length === 0 ? (
-                <p className="text-sm text-zinc-500">No readings yet.</p>
+                <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50 px-4 py-6 text-center">
+                  <p className="text-sm font-medium text-zinc-700">No readings yet</p>
+                  <p className="mt-1 text-xs text-zinc-500">
+                    Start the demo to populate live sensor values.
+                  </p>
+                </div>
               ) : (
                 <div className="grid auto-rows-fr grid-cols-2 gap-3 sm:grid-cols-3">
                   {Object.entries(latestBySensor).map(([sensor, reading]) => {
@@ -694,21 +722,21 @@ export default function SensorstreamClient() {
                     return (
                       <div
                         key={sensor}
-                        className={`flex h-full flex-col justify-between gap-1 rounded-lg border px-3 py-2 ${
+                        className={`flex h-full flex-col justify-between gap-2 rounded-xl border px-3.5 py-3 ${
                           isSelected
-                            ? "border-blue-200 bg-blue-50"
-                            : "border-zinc-100 bg-zinc-50"
+                            ? "border-blue-200 bg-blue-50/80 shadow-sm"
+                            : "border-zinc-200 bg-zinc-50/70"
                         }`}
                       >
                         <div className="flex items-center justify-between gap-2">
-                          <span className="text-xs font-medium text-zinc-500">
+                          <span className="text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500">
                             {sensor}
                           </span>
-                          <span className="text-[9px] text-zinc-400">
+                          <span className="text-[10px] text-zinc-400">
                             {formatTimestamp(parseReadingTime(reading))}
                           </span>
                         </div>
-                        <div className="text-base font-semibold text-zinc-900">
+                        <div className="text-lg font-semibold text-zinc-900">
                           {formatValue(reading?.value)}
                         </div>
                       </div>
@@ -717,7 +745,7 @@ export default function SensorstreamClient() {
                 </div>
               )}
               {latestSelected && (
-                <div className="mt-3 text-sm text-zinc-700">
+                <div className="mt-4 rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-700">
                   Latest {selectedSensor}: {formatValue(latestSelected.v)} at{" "}
                   {formatTimestamp(latestSelected.t)}
                 </div>
@@ -725,21 +753,26 @@ export default function SensorstreamClient() {
             </div>
           </section>
 
-          <section className="rounded-xl border border-zinc-200 bg-white shadow-sm">
-            <div className="border-b border-zinc-100 px-4 py-3">
-              <h2 className="text-sm font-semibold text-zinc-900">Readings</h2>
+          <section className="rounded-2xl border border-zinc-200 bg-white shadow-sm">
+            <div className="flex items-center justify-between gap-3 border-b border-zinc-100 px-5 py-4">
+              <div className="space-y-1">
+                <h2 className="text-sm font-semibold text-zinc-900">Readings</h2>
+                <p className="text-xs text-zinc-500">
+                  Live series history for the selected sensor.
+                </p>
+              </div>
             </div>
-            <div className="max-h-[420px] overflow-auto p-4 pt-2">
+            <div className="max-h-[420px] overflow-auto px-5 pb-5 pt-3">
               <table className="w-full border-collapse text-[13px]">
                 <thead className="sticky top-0 z-10 bg-white text-left">
                   <tr className="text-zinc-600">
-                    <th className="border-b border-zinc-200 px-2 py-2 font-semibold">
+                    <th className="border-b border-zinc-200 px-3 py-3 text-xs font-semibold uppercase tracking-[0.12em]">
                       Time
                     </th>
-                    <th className="border-b border-zinc-200 px-2 py-2 font-semibold">
+                    <th className="border-b border-zinc-200 px-3 py-3 text-xs font-semibold uppercase tracking-[0.12em]">
                       Sensor
                     </th>
-                    <th className="border-b border-zinc-200 px-2 py-2 font-semibold">
+                    <th className="border-b border-zinc-200 px-3 py-3 text-xs font-semibold uppercase tracking-[0.12em]">
                       Value
                     </th>
                   </tr>
@@ -748,10 +781,15 @@ export default function SensorstreamClient() {
                   {series.length === 0 ? (
                     <tr>
                       <td
-                        className="border-b border-zinc-100 px-2 py-2 text-sm text-zinc-500"
+                        className="px-3 py-8"
                         colSpan={3}
                       >
-                        Waiting for data...
+                        <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50 px-4 py-6 text-center">
+                          <p className="text-sm font-medium text-zinc-700">Waiting for data...</p>
+                          <p className="mt-1 text-xs text-zinc-500">
+                            New readings will appear here as the demo streams.
+                          </p>
+                        </div>
                       </td>
                     </tr>
                   ) : (
@@ -760,15 +798,15 @@ export default function SensorstreamClient() {
                         key={`${point.t.getTime()}-${index}`}
                         className={`${
                           index % 2 === 0 ? "bg-white" : "bg-zinc-50"
-                        } transition hover:bg-zinc-100/60`}
+                        }`}
                       >
-                        <td className="border-b border-zinc-100 px-2 py-2 font-mono text-xs text-zinc-600">
+                        <td className="border-b border-zinc-100 px-3 py-2.5 font-mono text-xs text-zinc-600">
                           {formatTimestamp(point.t)}
                         </td>
-                        <td className="border-b border-zinc-100 px-2 py-2 font-mono text-xs">
+                        <td className="border-b border-zinc-100 px-3 py-2.5 font-mono text-xs text-zinc-700">
                           {selectedSensor || "N/A"}
                         </td>
-                        <td className="border-b border-zinc-100 px-2 py-2">
+                        <td className="border-b border-zinc-100 px-3 py-2.5 font-medium text-zinc-900">
                           {formatValue(point.v)}
                         </td>
                       </tr>
@@ -780,15 +818,20 @@ export default function SensorstreamClient() {
           </section>
         </div>
 
-        <section className="rounded-xl border border-zinc-200 bg-white shadow-sm lg:col-span-7">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-100 px-4 py-3">
-            <h2 className="text-sm font-semibold text-zinc-900">Chart</h2>
-            <div className="flex items-center gap-2 text-sm">
-              <label className="text-zinc-600">Sensor</label>
+        <section className="rounded-2xl border border-zinc-200 bg-white shadow-sm lg:col-span-7">
+          <div className="flex flex-col gap-4 border-b border-zinc-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="space-y-1">
+              <h2 className="text-sm font-semibold text-zinc-900">Chart</h2>
+              <p className="text-xs text-zinc-500">
+                Live trend view for the selected telemetry stream.
+              </p>
+            </div>
+            <div className="flex items-center gap-2.5 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm">
+              <label className="text-sm font-medium text-zinc-600">Sensor</label>
               <select
                 value={selectedSensor}
                 onChange={(event) => setSelectedSensor(event.target.value)}
-                className="rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 text-sm text-zinc-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                className="min-w-[150px] rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
               >
                 {sensors.length === 0 ? (
                   <option value="">No sensors</option>
@@ -802,8 +845,8 @@ export default function SensorstreamClient() {
               </select>
             </div>
           </div>
-          <div className="flex items-center justify-center p-4">
-            <div className="w-full rounded-lg border border-zinc-200 bg-white p-2">
+          <div className="p-5">
+            <div className="rounded-xl border border-zinc-200 bg-zinc-50/50 p-3 sm:p-4">
               <canvas ref={chartRef} className="block h-[260px] w-full" />
             </div>
           </div>

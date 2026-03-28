@@ -1,6 +1,8 @@
-﻿import ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { loadMarkdown } from "@/lib/loadMarkdown";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const metadata = {
   title: "Locomotion Robot",
@@ -11,13 +13,22 @@ export default async function LocomotionPage() {
 
   return (
     <main className="min-h-screen">
-      <div className="mx-auto max-w-6xl px-4 py-10 lg:py-12">
-        <header className="flex flex-col gap-6 border-b border-zinc-200 pb-8 lg:flex-row lg:items-center lg:justify-between">
-          <div className="space-y-1">
-            <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-              Locomotion Robot
-            </h1>
-            <p className="text-sm text-zinc-500">
+      <div className="page-shell py-10 lg:py-12">
+        <div className="mb-6">
+          <Button
+            asChild
+            variant="ghost"
+            className="h-auto rounded-full border border-zinc-200/80 bg-white/70 px-3.5 py-2 text-sm font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-white"
+          >
+            <Link href="/">&larr; Back to Portfolio</Link>
+          </Button>
+        </div>
+
+        <header className="page-header">
+          <div className="space-y-2">
+            <p className="page-kicker">Project Detail</p>
+            <h1 className="page-title">Locomotion Robot</h1>
+            <p className="page-subtitle">
               Hardware + software integration demo for motion control.
             </p>
           </div>
@@ -35,10 +46,10 @@ export default async function LocomotionPage() {
 
         <div className="mt-8 grid gap-6 lg:grid-cols-12">
           <section className="surface lg:col-span-7">
-            <div className="border-b border-zinc-100 px-4 py-3">
+            <div className="panel-header">
               <h2 className="text-sm font-semibold text-zinc-900">Demo</h2>
             </div>
-            <div className="p-4">
+            <div className="panel-body">
               <div className="w-full overflow-hidden rounded-lg border border-zinc-200">
                 <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
                   <iframe
@@ -58,12 +69,10 @@ export default async function LocomotionPage() {
           </section>
 
           <section className="surface lg:col-span-5">
-            <div className="border-b border-zinc-100 px-4 py-3">
-              <h2 className="text-sm font-semibold text-zinc-900">
-                Repository
-              </h2>
+            <div className="panel-header">
+              <h2 className="text-sm font-semibold text-zinc-900">Repository</h2>
             </div>
-            <div className="flex flex-col gap-3 p-4 text-sm text-zinc-600">
+            <div className="panel-body flex flex-col gap-3 text-sm text-zinc-600">
               <p>
                 Source code and hardware notes for the locomotion robot demo.
               </p>
@@ -80,12 +89,12 @@ export default async function LocomotionPage() {
         </div>
 
         <section className="mt-6 surface">
-          <div className="border-b border-zinc-100 px-4 py-3">
+          <div className="panel-header">
             <h2 className="text-sm font-semibold text-zinc-900">
               ROS2 Graph (rqt_graph)
             </h2>
           </div>
-          <div className="space-y-4 p-4">
+          <div className="panel-body space-y-4">
             <p className="text-sm text-zinc-700">
               This graph visualizes the active ROS2 nodes and topic
               connections during teleoperation. The teleop_twist_keyboard node
@@ -105,12 +114,12 @@ export default async function LocomotionPage() {
         </section>
 
         <section className="mt-6 surface">
-          <div className="border-b border-zinc-100 px-4 py-3">
+          <div className="panel-header">
             <h2 className="text-sm font-semibold text-zinc-900">
               System Architecture
             </h2>
           </div>
-          <div className="flex flex-col gap-6 p-4">
+          <div className="panel-body flex flex-col gap-6">
             <div className="space-y-2">
               <a
                 href="/ros_architecture_refined.png"
@@ -168,10 +177,10 @@ export default async function LocomotionPage() {
         </section>
 
         <section className="mt-6 surface">
-          <div className="border-b border-zinc-100 px-4 py-3">
+          <div className="panel-header">
             <h2 className="text-sm font-semibold text-zinc-900">Documentation</h2>
           </div>
-          <div className="p-4 text-sm text-zinc-700">
+          <div className="panel-body text-sm text-zinc-700">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
@@ -251,7 +260,7 @@ export default async function LocomotionPage() {
                   </pre>
                 ),
               }}
-              className="prose prose-zinc max-w-none space-y-4"
+              className="prose prose-zinc max-w-none space-y-4 prose-headings:tracking-tight"
             >
               {docsContent}
             </ReactMarkdown>
