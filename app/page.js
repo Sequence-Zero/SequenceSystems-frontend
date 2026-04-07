@@ -37,7 +37,7 @@ export default function Home() {
             <p className="max-w-2xl text-base leading-7 text-zinc-700 sm:text-lg sm:leading-8">
               I build end-to-end systems that connect APIs, data pipelines, and real-time
               dashboards, with a growing focus on robotics and embedded systems. I enjoy bridging
-              hardware and software, turning raw telemetry and sensor data into clean,
+              hardware and software, turning telemetry and sensor data into clean,
               decision-ready interfaces.
             </p>
 
